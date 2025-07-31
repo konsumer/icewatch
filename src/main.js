@@ -35,7 +35,16 @@ buttonReport.addEventListener("click", () => {
     // Create a unique key for each new ice report
     const reportId = Date.now() + Math.random().toString(36).substr(2, 9);
 
-    // test report
+    // Create simple user ID (Gun only accepts primitive data types)
+    const userId =
+      localStorage.getItem("icewatch-user-id") ||
+      (() => {
+        const newId = "user-" + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem("icewatch-user-id", newId);
+        return newId;
+      })();
+
+    // Only put simple, serializable data into Gun
     const reportData = {
       note: "ICE Activity Reported",
       // latitude: pos.lat,
@@ -43,8 +52,7 @@ buttonReport.addEventListener("click", () => {
       latitude: 45.51515107022085 + Math.random() / 100,
       longitude: -122.68108606338502 + Math.random() / 100,
       timestamp: Date.now(),
-      id: reportId,
-      user: gun._.opt.uuid || "anonymous", // Add user identifier for debugging
+      user: userId,
     };
 
     // Add the new report to the Gun collection
