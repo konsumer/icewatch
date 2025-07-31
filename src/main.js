@@ -4,7 +4,7 @@ import GUN from "gun";
 import t from "./lang.js";
 import "./style.css";
 
-localStorage.clear();
+// localStorage.clear();
 const gun = GUN();
 let node;
 let pos;
